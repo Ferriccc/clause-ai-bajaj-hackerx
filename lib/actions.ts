@@ -1,6 +1,7 @@
 'use server';
 
 import { Ragie } from 'ragie';
+import { revalidatePath } from 'next/cache';
 
 // Initialize the Ragie client once
 const ragie = new Ragie({
@@ -13,6 +14,7 @@ export async function uploadFile(formData: FormData) {
     file,
     name: file.name,
   });
+  revalidatePath('/');
   return id;
 }
 
@@ -26,4 +28,5 @@ export async function getUploadedFiles() {
 
 export async function deleteDocument(id: string) {
   await ragie.documents.delete({ documentId: id });
+  revalidatePath('/');
 }

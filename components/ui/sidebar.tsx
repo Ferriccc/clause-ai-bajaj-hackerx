@@ -1,13 +1,22 @@
 "use client";
 
 import { FileText, MessageSquare, Upload } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SidebarProps {
   activeTab: "query" | "upload" | "files";
-  onTabChange: (tab: "query" | "upload" | "files") => void;
 }
 
-export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
+export function Sidebar({ activeTab }: SidebarProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleTabChange = (tab: "query" | "upload" | "files") => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", tab);
+    router.push(`/?${params.toString()}`);
+  };
+
   return (
     <div className="w-64 bg-neutral-800 flex flex-col">
       {/* Header */}
@@ -20,7 +29,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       <div className="flex-1 p-4">
         <div className="space-y-2">
           <button
-            onClick={() => onTabChange("query")}
+            onClick={() => handleTabChange("query")}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
               activeTab === "query"
                 ? "bg-neutral-700 text-white"
@@ -32,7 +41,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           </button>
 
           <button
-            onClick={() => onTabChange("upload")}
+            onClick={() => handleTabChange("upload")}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
               activeTab === "upload"
                 ? "bg-neutral-700 text-white"
@@ -43,7 +52,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             <span className="font-medium">Upload Documents</span>
           </button>
           <button
-            onClick={() => onTabChange("files")}
+            onClick={() => handleTabChange("files")}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
               activeTab === "files"
                 ? "bg-neutral-700 text-white"
@@ -57,4 +66,4 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       </div>
     </div>
   );
-} 
+}
