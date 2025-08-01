@@ -1,10 +1,10 @@
 "use client";
 
-import { MessageSquare, Upload } from "lucide-react";
+import { FileText, MessageSquare, Upload } from "lucide-react";
 
 interface SidebarProps {
-  activeTab: "query" | "upload";
-  onTabChange: (tab: "query" | "upload") => void;
+  activeTab: "query" | "upload" | "files";
+  onTabChange: (tab: "query" | "upload" | "files") => void;
 }
 
 export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
@@ -30,7 +30,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             <MessageSquare size={20} />
             <span className="font-medium">Query Documents</span>
           </button>
-          
+
           <button
             onClick={() => onTabChange("upload")}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
@@ -41,6 +41,17 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           >
             <Upload size={20} />
             <span className="font-medium">Upload Documents</span>
+          </button>
+          <button
+            onClick={() => onTabChange("files")}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-colors ${
+              activeTab === "files"
+                ? "bg-neutral-700 text-white"
+                : "text-white hover:bg-neutral-700"
+            }`}
+          >
+            <FileText size={20} />
+            <span className="font-medium">Uploaded Files</span>
           </button>
         </div>
       </div>

@@ -1,17 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { FileUpload } from "../ui/file-upload";
-import { FileList } from "../ui/file-list";
 
 export function UploadPage() {
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-
-  const handleFilesUpload = (newFiles: File[]) => {
-    setUploadedFiles(prev => [...prev, ...newFiles]);
-    // TODO: Implement file upload to ragie.ai
-  };
-
   return (
     <div className="flex-1 p-8">
       <div className="max-w-4xl mx-auto">
@@ -24,8 +15,7 @@ export function UploadPage() {
           </p>
         </div>
 
-        <FileUpload onFilesUpload={handleFilesUpload} />
-        <FileList files={uploadedFiles} />
+        <FileUpload />
       </div>
     </div>
   );

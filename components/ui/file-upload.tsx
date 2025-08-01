@@ -2,18 +2,27 @@
 
 import { useState } from "react";
 import { Upload } from "lucide-react";
+import { uploadFile } from "@/lib/actions";
 
-interface FileUploadProps {
-  onFilesUpload: (files: File[]) => void;
-}
-
-export function FileUpload({ onFilesUpload }: FileUploadProps) {
+export function FileUpload() {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileUpload = (files: FileList | null) => {
+  const handleFileUpload = async (files: FileList | null) => {
     if (!files) return;
-    const newFiles = Array.from(files);
-    onFilesUpload(newFiles);
+    setIsUploading(true);
+    try {
+      const uploadPromises = Array.from(files).map(file => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return uploadFile(formData);
+      });
+      await Promise.all(uploadPromises);
+    } catch (error) {
+      console.error("Error uploading files:", error);
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -46,7 +55,7 @@ export function FileUpload({ onFilesUpload }: FileUploadProps) {
       >
         <Upload size={48} className="mx-auto text-neutral-400 mb-4" />
         <h3 className="text-lg font-medium text-white mb-2">
-          Drop files here or click to upload
+          {isUploading ? "Uploading..." : "Drop files here or click to upload"}
         </h3>
         <p className="text-white mb-4">
           Upload PDF, DOC, DOCX, or TXT files to be indexed
@@ -58,12 +67,15 @@ export function FileUpload({ onFilesUpload }: FileUploadProps) {
           onChange={(e) => handleFileUpload(e.target.files)}
           className="hidden"
           id="file-upload"
+          disabled={isUploading}
         />
         <label
           htmlFor="file-upload"
-          className="inline-flex items-center px-4 py-2 bg-neutral-200 text-neutral-900 rounded-lg hover:bg-neutral-300 cursor-pointer transition-colors"
+          className={`inline-flex items-center px-4 py-2 bg-neutral-200 text-neutral-900 rounded-lg hover:bg-neutral-300 cursor-pointer transition-colors ${
+            isUploading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Choose Files
+          {isUploading ? "Uploading..." : "Choose Files"}
         </label>
       </div>
     </div>

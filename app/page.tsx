@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Sidebar } from "@/components/ui";
-import { QueryPage, UploadPage } from "@/components/pages";
+import { QueryPage, UploadPage, FilesPage } from "@/components/pages";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"query" | "upload">("query");
+  const [activeTab, setActiveTab] = useState<"query" | "upload" | "files">("query");
 
   return (
     <div className="flex h-screen bg-neutral-900">
@@ -15,6 +15,7 @@ export default function Home() {
       <div className="flex-1 flex flex-col">
         {activeTab === "query" && <QueryPage />}
         {activeTab === "upload" && <UploadPage />}
+        {activeTab === "files" && <FilesPage />}
       </div>
     </div>
   );
