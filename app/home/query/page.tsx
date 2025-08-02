@@ -3,21 +3,19 @@
 import { useState } from "react";
 import { QueryForm } from "@/components/ui/query-form";
 import { ExampleQueries } from "@/components/ui/example-queries";
+import { queryRagie } from "@/lib/actions";
 
 export default function QueryPage() {
     const [isLoading, setIsLoading] = useState(false);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const handleQuerySubmit = async (_query: string) => {
+    const handleQuerySubmit = async (query: string) => {
         setIsLoading(true);
-        // TODO: Implement query logic with ragie.ai
-        setTimeout(() => setIsLoading(false), 2000);
+        const results = await queryRagie(query);
+        console.log(results);
+        setIsLoading(false);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const handleExampleSelect = (_query: string) => {
-        // This will be handled by the QueryForm component
-        // We could pass this through a ref or state management
+    const handleExampleSelect = (query: string) => {
     };
 
     return (
