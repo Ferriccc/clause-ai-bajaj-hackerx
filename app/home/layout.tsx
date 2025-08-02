@@ -7,8 +7,8 @@ function Sidebar() {
     const pathname = usePathname();
 
     const links = [
-        { href: "/home/query", label: "Query Page" },
-        { href: "/home/upload", label: "Upload Page" },
+        { href: "/home/query", label: "Home" },
+        { href: "/home/upload", label: "Knowledge Base" },
     ];
 
     return (
