@@ -1,5 +1,7 @@
 import { FileUpload } from "@/components/ui/file-upload";
 import { FileList } from "@/components/ui/file-list";
+import { FileListLoading } from "@/components/ui/file-list-loading";
+import { Suspense } from "react";
 
 export default async function UploadPage() {
     return (
@@ -11,7 +13,9 @@ export default async function UploadPage() {
             <p className="mt-4 text-sm text-muted-foreground">
                 Uploaded Documents
             </p>
-            <FileList />
+            <Suspense fallback={<FileListLoading />}>
+                <FileList />
+            </Suspense>
         </div>
     );
 } 
