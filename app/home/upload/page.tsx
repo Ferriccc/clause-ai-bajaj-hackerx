@@ -1,22 +1,17 @@
-"use client";
-
 import { FileUpload } from "@/components/ui/file-upload";
+import { FileList } from "@/components/ui/file-list";
 
-export default function UploadPage() {
+export default async function UploadPage() {
     return (
-        <div className="flex-1 p-8">
-            <div className="max-w-4xl mx-auto">
-                <div className="mb-8">
-                    <h2 className="text-2xl font-semibold text-white mb-2">
-                        Upload Documents
-                    </h2>
-                    <p className="text-white">
-                        Upload your documents to be indexed and made searchable. Supported formats: PDF, DOC, DOCX, TXT
-                    </p>
-                </div>
-
+        <div className="flex-1 flex-col p-4 md:p-6">
+            <div className="flex items-center justify-between gap-4">
+                <h1 className="text-lg font-semibold md:text-2xl text-white">Knowledge Base</h1>
                 <FileUpload />
             </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+                Uploaded Documents
+            </p>
+            <FileList />
         </div>
     );
 } 
